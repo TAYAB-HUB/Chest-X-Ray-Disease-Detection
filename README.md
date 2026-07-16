@@ -7,7 +7,7 @@ A CNN-based pneumonia detection system built with transfer learning (DenseNet121
 ![Streamlit](https://img.shields.io/badge/Streamlit-Deployed-red)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-🔗 **[Live Demo](chest-x-ray-disease-detection.streamlit.app)** &nbsp;•&nbsp; 📓 **[Colab Notebook](Chest X-Ray Disease Detection using CNN.ipynb)** &nbsp;•&nbsp; 📊 **[Dataset](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)**
+🔗 **[Live Demo](https://chest-x-ray-disease-detection.streamlit.app/)** &nbsp;•&nbsp; 📓 **[Notebook](https://github.com/TAYAB-HUB/Chest-X-Ray-Disease-Detection/blob/main/Chest%20X-Ray%20Disease%20Detection%20using%20CNN.ipynb)** &nbsp;•&nbsp; 📊 **[Dataset](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)**
 
 ---
 
@@ -41,12 +41,11 @@ This project builds a deep learning model that classifies chest X-ray images as 
 | Class imbalance: PNEUMONIA outnumbers NORMAL ~2.9x in training data | Computed `class_weight="balanced"` weights and passed them into `model.fit()` |
 | `test` set showed a distribution shift from `train`/`val` (likely different patient population/imaging equipment) | Kept `test` set completely untouched and used it as the sole source of truth for final model comparison — never used for tuning |
 
-### Sample images
-<h2><a class="anchor" id="Sample X-rays"></a>Sample X-rays </h2>
-This Project cover this question:
-<p> <br>1.In which language were the longrunning films created according to the dataset? Make a visualization:</br>
-<br><img width="1477" height="458" alt="Box plot graph" src="[https://github.com/user-attachments/assets/3d44f6cd-dd13-4a54-8e98-ec46424a6333](https://github.com/TAYAB-HUB/Chest-X-Ray-Disease-Detection/blob/c8db380f7e3d8bcf46df13f308d4cf132ee759da/chest_xray/assets/Normal%20vs%20Grad-CAM.png)" /></br>
+### Sample predictions with Grad-CAM (NORMAL cases)
 
+![Grad-CAM overlays on NORMAL X-rays showing prediction confidence and attention regions](chest_xray/assets/normal_gradcam_grid.png)
+
+*Top row: original NORMAL X-rays with model prediction score. Bottom row: Grad-CAM overlay showing where the model focused. Note the low prediction scores (0.03, 0.24) correctly indicating NORMAL, alongside one borderline case (0.73) — see [Limitations](#️-key-limitation-discovered) for why some hot regions fall outside lung tissue.*
 
 ---
 
@@ -120,7 +119,7 @@ In a medical screening context, a **false negative** (model says healthy, patien
 weighted avg       0.88      0.87      0.86       624
 ```
 
-![Confusion Matrix](chest_xray\assets\Confusion Matrix.png)
+![Confusion matrix showing 384 true positives, 149 true negatives, 6 false negatives, 85 false positives](chest_xray/assets/confusion_matrix.png)
 
 ---
 
@@ -128,10 +127,9 @@ weighted avg       0.88      0.87      0.86       624
 
 Grad-CAM was used to visualize which regions of each X-ray the model focused on when making its prediction, by computing gradients with respect to the last convolutional layer's feature maps (`relu`, the final DenseNet121 activation before pooling).
 
-![Grad-CAM Pneumonia](chest_xray\assets\PNEUMONIA Detected.png)
+![Grad-CAM overlay on a PNEUMONIA X-ray from the live app](chest_xray/assets/pneumonia_detected.png)
 
-![Grad-CAM Normal](chest_xray\assets\No Disease Detected.png)
-
+![Grad-CAM overlay comparison across three NORMAL X-rays](chest_xray/assets/normal_gradcam_grid.png)
 
 ### ⚠️ Key limitation discovered
 
@@ -154,20 +152,24 @@ An interactive web app for uploading an X-ray and getting a live prediction:
 - Sidebar shows model architecture, test metrics, and the Grad-CAM limitation notice
 - Session-based prediction history
 
-![Streamlit App Screenshot](chest_xray\assets\webpage.png)
+![Streamlit app showing model info sidebar, X-ray upload, and Grad-CAM prediction](chest_xray/assets/webpage.png)
 
 ### Run locally
 
 ```bash
 git clone https://github.com/TAYAB-HUB/Chest-X-Ray-Disease-Detection.git
-cd <your-repo>
+cd Chest-X-Ray-Disease-Detection
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
 ### Deployment
 
-Deployed on **Streamlit Community Cloud**, pointed at this repository. The trained model (`final_model.keras`) is tracked with [Git LFS](https://git-lfs.github.com/) due to its size (~30-80MB).
+Deployed on **Streamlit Community Cloud**, pointed at this repository.
+
+**Deployment notes:** two environment-specific issues came up that don't show up in Colab:
+- Streamlit Cloud's default Python version (3.14) doesn't yet have TensorFlow wheels available — fixed by pinning `runtime.txt` to `python-3.11` and re-deploying (Python version can only be set at deploy time, not changed on a running app).
+- The Grad-CAM implementation initially built a new sliced sub-model from a named DenseNet121 layer, which triggered graph-disconnection errors specific to the Keras version installed on Streamlit Cloud (different from Colab's). Fixed by using `base_model`'s own output directly — since it was built with `include_top=False`, its output already *is* the last convolutional feature map, removing the need to slice into it at all.
 
 ---
 
@@ -187,17 +189,19 @@ Deployed on **Streamlit Community Cloud**, pointed at this repository. The train
 ## 📁 Project Structure
 
 ```
-├── app.py                          # Streamlit web app
-├── requirements.txt                # Python dependencies
-├── final_model.keras               # Trained model (Git LFS)
-├── notebooks/
-│   └── chest_xray_disease_detection.ipynb   # Full training notebook
-├── assets/                         # Screenshots used in this README
-│   ├── sample_xrays.png
-│   ├── confusion_matrix.png
-│   ├── gradcam_pneumonia.png
-│   ├── gradcam_normal.png
-│   └── streamlit_app.png
+├── app.py                                          # Streamlit web app
+├── requirements.txt                                # Python dependencies
+├── runtime.txt                                     # Pins Python version for deployment
+├── final_model.keras                               # Final trained model (Phase 2, threshold 0.4)
+├── phase2_best.keras                               # Checkpoint from fine-tuning phase
+├── Chest X-Ray Disease Detection using CNN.ipynb   # Full training notebook
+├── chest_x_ray_disease_detection_using_cnn.py      # Notebook exported as a plain script
+├── chest_xray/
+│   └── assets/                                     # Screenshots used in this README
+│       ├── normal_gradcam_grid.png
+│       ├── confusion_matrix.png
+│       ├── pneumonia_detected.png
+│       └── webpage.png
 └── README.md
 ```
 
@@ -222,4 +226,4 @@ This project is licensed under the MIT License.
 ## 🙋 Author
 
 **Tayab** — CSE student, Presidency University, Bengaluru
-[LinkedIn](https://www.linkedin.com/in/syed-tayab01) &nbsp;•&nbsp; [GitHub](https://github.com/TAYAB-HUB/Chest-X-Ray-Disease-Detection)
+[LinkedIn](https://www.linkedin.com/in/syed-tayab01) &nbsp;•&nbsp; [GitHub](https://github.com/TAYAB-HUB)
