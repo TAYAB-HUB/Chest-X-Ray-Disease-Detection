@@ -7,7 +7,7 @@ A CNN-based pneumonia detection system built with transfer learning (DenseNet121
 ![Streamlit](https://img.shields.io/badge/Streamlit-Deployed-red)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-🔗 **[Live Demo](#)** &nbsp;•&nbsp; 📓 **[Colab Notebook](#)** &nbsp;•&nbsp; 📊 **[Dataset](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)**
+🔗 **[Live Demo](chest-x-ray-disease-detection.streamlit.app)** &nbsp;•&nbsp; 📓 **[Colab Notebook](Chest X-Ray Disease Detection using CNN.ipynb)** &nbsp;•&nbsp; 📊 **[Dataset](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)**
 
 ---
 
@@ -45,7 +45,7 @@ This project builds a deep learning model that classifies chest X-ray images as 
 
 ![Sample X-rays](assets/sample_xrays.png)
 *Add a screenshot of your NORMAL vs PNEUMONIA sample grid here (from your data exploration cell).*
-
+![alt text](image.png)
 ---
 
 ## 🧠 Methodology
@@ -120,7 +120,7 @@ weighted avg       0.88      0.87      0.86       624
 
 ![Confusion Matrix](assets/confusion_matrix.png)
 *Add your confusion matrix screenshot here.*
-
+![alt text](image-1.png)
 ---
 
 ## 🔍 Explainability: Grad-CAM
@@ -129,9 +129,11 @@ Grad-CAM was used to visualize which regions of each X-ray the model focused on 
 
 ![Grad-CAM Pneumonia](assets/gradcam_pneumonia.png)
 *Add your PNEUMONIA Grad-CAM overlay screenshot here.*
+![alt text](image-4.png)
 
 ![Grad-CAM Normal](assets/gradcam_normal.png)
 *Add your NORMAL Grad-CAM overlay screenshot here.*
+![alt text](image-3.png)
 
 ### ⚠️ Key limitation discovered
 
@@ -156,11 +158,11 @@ An interactive web app for uploading an X-ray and getting a live prediction:
 
 ![Streamlit App Screenshot](assets/streamlit_app.png)
 *Add a screenshot of your running app here.*
-
+![alt text](image-2.png)
 ### Run locally
 
 ```bash
-git clone https://github.com/<your-username>/<your-repo>.git
+git clone https://github.com/TAYAB-HUB/Chest-X-Ray-Disease-Detection.git
 cd <your-repo>
 pip install -r requirements.txt
 streamlit run app.py
@@ -223,4 +225,4 @@ This project is licensed under the MIT License.
 ## 🙋 Author
 
 **Tayab** — CSE student, Presidency University, Bengaluru
-[LinkedIn](#) &nbsp;•&nbsp; [GitHub](#)
+[LinkedIn](https://www.linkedin.com/in/syed-tayab01) &nbsp;•&nbsp; [GitHub](https://github.com/TAYAB-HUB/Chest-X-Ray-Disease-Detection)
