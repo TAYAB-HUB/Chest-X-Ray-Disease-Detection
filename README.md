@@ -43,7 +43,7 @@ This project builds a deep learning model that classifies chest X-ray images as 
 
 ### Sample images
 
-![Sample X-rays](chest_xray\assets\Normal vs Grad-CAM.png)
+![Sample X-rays](chest_xray/assets/Normal vs Grad-CAM.png)
 
 
 ---
