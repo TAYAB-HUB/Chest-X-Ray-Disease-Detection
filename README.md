@@ -42,8 +42,10 @@ This project builds a deep learning model that classifies chest X-ray images as 
 | `test` set showed a distribution shift from `train`/`val` (likely different patient population/imaging equipment) | Kept `test` set completely untouched and used it as the sole source of truth for final model comparison — never used for tuning |
 
 ### Sample images
-
-![Sample X-rays]([chest_xray/assets/Normal vs Grad-CAM.png](https://github.com/TAYAB-HUB/Chest-X-Ray-Disease-Detection/blob/c8db380f7e3d8bcf46df13f308d4cf132ee759da/chest_xray/assets/Normal%20vs%20Grad-CAM.png))
+<h2><a class="anchor" id="Sample X-rays"></a>Sample X-rays </h2>
+This Project cover this question:
+<p> <br>1.In which language were the longrunning films created according to the dataset? Make a visualization:</br>
+<br><img width="1477" height="458" alt="Box plot graph" src="[https://github.com/user-attachments/assets/3d44f6cd-dd13-4a54-8e98-ec46424a6333](https://github.com/TAYAB-HUB/Chest-X-Ray-Disease-Detection/blob/c8db380f7e3d8bcf46df13f308d4cf132ee759da/chest_xray/assets/Normal%20vs%20Grad-CAM.png)" /></br>
 
 
 ---
