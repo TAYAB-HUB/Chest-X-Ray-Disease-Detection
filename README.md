@@ -43,7 +43,7 @@ This project builds a deep learning model that classifies chest X-ray images as 
 
 ### Sample images
 
-![Sample X-rays](chest_xray/assets/Normal vs Grad-CAM.png)
+![Sample X-rays]([chest_xray/assets/Normal vs Grad-CAM.png](https://github.com/TAYAB-HUB/Chest-X-Ray-Disease-Detection/blob/c8db380f7e3d8bcf46df13f308d4cf132ee759da/chest_xray/assets/Normal%20vs%20Grad-CAM.png))
 
 
 ---
