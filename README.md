@@ -43,9 +43,9 @@ This project builds a deep learning model that classifies chest X-ray images as 
 
 ### Sample images
 
-![Sample X-rays](assets/sample_xrays.png)
-*Add a screenshot of your NORMAL vs PNEUMONIA sample grid here (from your data exploration cell).*
-![alt text](image.png)
+![Sample X-rays](chest_xray\assets\Normal vs Grad-CAM.png)
+
+
 ---
 
 ## 🧠 Methodology
@@ -118,22 +118,18 @@ In a medical screening context, a **false negative** (model says healthy, patien
 weighted avg       0.88      0.87      0.86       624
 ```
 
-![Confusion Matrix](assets/confusion_matrix.png)
-*Add your confusion matrix screenshot here.*
-![alt text](image-1.png)
+![Confusion Matrix](chest_xray\assets\Confusion Matrix.png)
+
 ---
 
 ## 🔍 Explainability: Grad-CAM
 
 Grad-CAM was used to visualize which regions of each X-ray the model focused on when making its prediction, by computing gradients with respect to the last convolutional layer's feature maps (`relu`, the final DenseNet121 activation before pooling).
 
-![Grad-CAM Pneumonia](assets/gradcam_pneumonia.png)
-*Add your PNEUMONIA Grad-CAM overlay screenshot here.*
-![alt text](image-4.png)
+![Grad-CAM Pneumonia](chest_xray\assets\PNEUMONIA Detected.png)
 
-![Grad-CAM Normal](assets/gradcam_normal.png)
-*Add your NORMAL Grad-CAM overlay screenshot here.*
-![alt text](image-3.png)
+![Grad-CAM Normal](chest_xray\assets\No Disease Detected.png)
+
 
 ### ⚠️ Key limitation discovered
 
@@ -156,9 +152,8 @@ An interactive web app for uploading an X-ray and getting a live prediction:
 - Sidebar shows model architecture, test metrics, and the Grad-CAM limitation notice
 - Session-based prediction history
 
-![Streamlit App Screenshot](assets/streamlit_app.png)
-*Add a screenshot of your running app here.*
-![alt text](image-2.png)
+![Streamlit App Screenshot](chest_xray\assets\webpage.png)
+
 ### Run locally
 
 ```bash
