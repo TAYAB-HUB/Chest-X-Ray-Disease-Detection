@@ -43,9 +43,9 @@ This project builds a deep learning model that classifies chest X-ray images as 
 
 ### Sample predictions with Grad-CAM (NORMAL cases)
 
-![Grad-CAM overlays on NORMAL X-rays showing prediction confidence and attention regions](chest_xray/assets/normal_gradcam_grid.png)
+![Grad-CAM overlays on NORMAL X-rays showing prediction confidence and attention regions](chest_xray/assets/No%20Disease%20Detected.png)
 
-*Top row: original NORMAL X-rays with model prediction score. Bottom row: Grad-CAM overlay showing where the model focused. Note the low prediction scores (0.03, 0.24) correctly indicating NORMAL, alongside one borderline case (0.73) — see [Limitations](#️-key-limitation-discovered) for why some hot regions fall outside lung tissue.*
+*Grad-CAM overlay showing where the model focused for a correctly-predicted NORMAL X-ray. See [Limitations](#️-key-limitation-discovered) for cases where hot regions fall outside lung tissue.*
 
 ---
 
@@ -119,7 +119,7 @@ In a medical screening context, a **false negative** (model says healthy, patien
 weighted avg       0.88      0.87      0.86       624
 ```
 
-![Confusion matrix showing 384 true positives, 149 true negatives, 6 false negatives, 85 false positives](chest_xray/assets/confusion_matrix.png)
+![Confusion matrix showing 384 true positives, 149 true negatives, 6 false negatives, 85 false positives](chest_xray/assets/Confusion%20Matrix.png)
 
 ---
 
@@ -127,9 +127,9 @@ weighted avg       0.88      0.87      0.86       624
 
 Grad-CAM was used to visualize which regions of each X-ray the model focused on when making its prediction, by computing gradients with respect to the last convolutional layer's feature maps (`relu`, the final DenseNet121 activation before pooling).
 
-![Grad-CAM overlay on a PNEUMONIA X-ray from the live app](chest_xray/assets/pneumonia_detected.png)
+![Grad-CAM overlay on a PNEUMONIA X-ray from the live app](chest_xray/assets/PNEUMONIA%20Detected.png)
 
-![Grad-CAM overlay comparison across three NORMAL X-rays](chest_xray/assets/normal_gradcam_grid.png)
+![Grad-CAM overlay on a NORMAL X-ray from the live app](chest_xray/assets/No%20Disease%20Detected.png)
 
 ### ⚠️ Key limitation discovered
 
