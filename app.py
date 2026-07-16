@@ -45,7 +45,22 @@ def get_base_model(_model):
 # ----------------------------------------------------------------------------
 # Grad-CAM
 # ----------------------------------------------------------------------------
-def make_gradcam_heatmap(img_array, full_model, base_model, last_conv_layer_name="relu"):
+def find_last_conv_layer(base_model):
+    """Auto-detect the last layer with a 4D (spatial) output, regardless of its name."""
+    for layer in reversed(base_model.layers):
+        try:
+            shape = layer.output.shape
+            if len(shape) == 4:
+                return layer.name
+        except Exception:
+            continue
+    raise ValueError("No 4D-output layer found in base model.")
+
+
+def make_gradcam_heatmap(img_array, full_model, base_model, last_conv_layer_name=None):
+    if last_conv_layer_name is None:
+        last_conv_layer_name = find_last_conv_layer(base_model)
+
     x = tf.keras.applications.densenet.preprocess_input(img_array)
 
     conv_layer_model = tf.keras.Model(base_model.input, base_model.get_layer(last_conv_layer_name).output)
@@ -69,7 +84,6 @@ def make_gradcam_heatmap(img_array, full_model, base_model, last_conv_layer_name
     heatmap = tf.squeeze(heatmap)
     heatmap = tf.maximum(heatmap, 0) / (tf.math.reduce_max(heatmap) + 1e-8)
     return heatmap.numpy()
-
 
 def overlay_gradcam(pil_img, heatmap, alpha=0.4):
     img = pil_img.resize(IMG_SIZE)
